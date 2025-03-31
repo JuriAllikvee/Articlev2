@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Авторизация</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="wrapper">
+  <form method="post" th:action="@{/login}">
+    <h2>Авторизация</h2>
+
+    <div th:if="${errorMessage}" class="alert alert-danger">
+      <span th:text="${errorMessage}"></span>
+    </div>
+
+    <div th:if="${logoutMessage}" class="alert alert-success">
+      <span th:text="${logoutMessage}"></span>
+    </div>
+
+    <div class="input-field">
+      <input type="text" id="username" name="username" required>
+      <label>Имя пользователя или Email</label>
+    </div>
+
+    <div class="input-field">
+      <input type="password" id="password" name="password" required>
+      <label>Пароль</label>
+    </div>
+
+    <div class="forget">
+      <label for="remember">
+        <input type="checkbox" id="remember" name="remember-me">
+        <p>Запомнить меня</p>
+      </label>
+      <a href="#">Забыли пароль?</a>
+    </div>
+
+    <button type="submit">Войти</button>
+
+    <div class="register">
+      <p>Нет аккаунта? <a th:href="@{/registration}">Регистрация</a></p>
+      <p><a th:href="@{/articles}">Продолжить как гость</a></p>
+    </div>
+  </form>
+</div>
+</body>
+</html>
