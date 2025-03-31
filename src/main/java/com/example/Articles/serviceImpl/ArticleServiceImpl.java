@@ -3,7 +3,11 @@ package com.example.Articles.serviceImpl;
 import com.example.Articles.entity.Article;
 import com.example.Articles.repository.ArticleRepository;
 import com.example.Articles.service.ArticleService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,6 +54,7 @@ public class ArticleServiceImpl implements ArticleService {
                 })
                 .orElseThrow(() -> new IllegalArgumentException("Статья не найдена"));
     }
+
 
     @Override
     public void deleteArticle(Long id) {

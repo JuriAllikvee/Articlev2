@@ -3,6 +3,7 @@ package com.example.Articles.controllers;
 import com.example.Articles.entity.Tag;
 import com.example.Articles.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,16 +34,21 @@ public class TagController {
     }
 
     @GetMapping("/new")
+    @PreAuthorize("isAuthenticated()") // ✅ Правильно
     public String showCreateForm(Model model) {
         model.addAttribute("tag", new Tag());
         return "tags/add";
     }
 
+
+
+
     @PostMapping
-    public String createTag(@ModelAttribute Tag tag) {
+    public String createTag(@ModelAttribute Tag tag, @RequestParam(required = false) String redirectTo) {
         tagService.createTag(tag);
-        return "redirect:/tags";
+        return redirectTo != null ? "redirect:" + redirectTo : "redirect:/tags";
     }
+
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {

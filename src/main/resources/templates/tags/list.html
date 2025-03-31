@@ -64,8 +64,7 @@
       </table>
     </div>
 
-    <!-- Кнопка добавления тега -->
-    <div class="text-center mt-4" sec:authorize="hasRole('ADMIN')">
+    <div class="text-center mt-4" sec:authorize="isAuthenticated()">
       <a href="/tags/new" class="btn btn-success btn-lg">
         <i class="fas fa-plus"></i> Добавить тег
       </a>

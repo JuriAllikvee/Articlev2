@@ -96,7 +96,10 @@ public class ArticleController {
         Article article = articleService.getArticleById(id).orElseThrow();
         String username = authentication.getName();
 
-        if (!article.getUser().getUsername().equals(username)) {
+        boolean isAdmin = authentication.getAuthorities()
+                .stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
+
+        if (!isAdmin && !article.getUser().getUsername().equals(username)) {
             return "redirect:/articles?error=not-authorized";
         }
 
@@ -116,13 +119,17 @@ public class ArticleController {
         Article article = articleService.getArticleById(id).orElseThrow();
         String username = authentication.getName();
 
-        if (!article.getUser().getUsername().equals(username)) {
+        boolean isAdmin = authentication.getAuthorities()
+                .stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
+
+        if (!isAdmin && !article.getUser().getUsername().equals(username)) {
             return "redirect:/articles?error=not-authorized";
         }
 
         articleService.deleteArticle(id);
         return "redirect:/articles";
     }
+
     @GetMapping("/articles")
     public String listArticles(Model model, Authentication authentication) {
         List<Article> articles = articleService.getAllArticles();

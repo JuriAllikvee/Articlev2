@@ -58,6 +58,10 @@ public class UserController {
     }
     @PostMapping("/delete/{id}")
     public String deleteUser(@PathVariable Long id) {
+        User user = userService.findById(id);
+        if (user.getRole() == User.Role.ADMIN) {
+            return "redirect:/users?error=admin_cannot_be_deleted";
+        }
         userService.deleteUser(id);
         return "redirect:/users";
     }

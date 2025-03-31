@@ -38,10 +38,12 @@ public class SecurityConfig {
                         ).permitAll()
 
                         .requestMatchers(
-                                "/tags/new", "/tags/edit/**", "/tags/delete/**"
+                                "/tags/edit/**", "/tags/delete/**"
                         ).hasRole("ADMIN")
 
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+
+                        .requestMatchers("/tags/new", "/tags").authenticated()
 
                         .anyRequest().authenticated()
                 )
